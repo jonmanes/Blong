@@ -33,6 +33,7 @@ var step = function() {
 
 var update = function() {
   player.update();
+  computer.update();
   ball.update(player.paddle, computer.paddle);
 };
 
@@ -85,6 +86,18 @@ Player.prototype.update = function() {
       this.paddle.move(0, 0);
     }
   }
+};
+
+Computer.prototype.update = function() {
+    var speed = Math.min(ball.ySpeed,3);
+    
+    if (this.paddle.y > ball.y) {
+        this.paddle.move(0,-this.paddle.speed);
+    } else if (this.paddle.y < ball.y) {
+        this.paddle.move(0,this.paddle.speed);
+    } else {
+    this.paddle.move(0, speed);
+    }
 };
 
 Player.prototype.render = function() {
