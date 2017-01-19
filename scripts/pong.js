@@ -33,6 +33,7 @@ var step = function() {
 
 var update = function() {
   player.update();
+  ball.update(player.paddle, computer.paddle);
 };
 
 function Paddle (x,y,width,height) {
@@ -54,6 +55,8 @@ function Player() {
 function Ball(x,y) {
   this.x = x;
   this.y = y;
+  this.xSpeed = 3;
+  this.ySpeed = Math.floor((Math.random() * 8) + -4);
 };
 
 Paddle.prototype.render = function() {
@@ -98,6 +101,39 @@ Ball.prototype.render = function() {
   field_context.fillRect(this.x, this.y, 10, 10);
 };
 
+Ball.prototype.update = function(paddle1, paddle2) {
+  this.x += this.xSpeed;
+  this.y += this.ySpeed;
+  this.right = this.x + 5;
+  this.top = this.y + 5;
+  this.left = this.x - 5;
+  this.bottom = this.y - 5;
+
+  if(this.top < 30) {
+    this.y = 30;
+    this.ySpeed = -this.ySpeed;
+  } else if(this.bottom > 590) {
+    this.y = 585;
+    this.ySpeed = -this.ySpeed;
+  }
+
+  if(this.x < 5 || this.x > 795) {
+    this.ySpeed = Math.floor((Math.random() * 8) + -4);
+    this.xSpeed = 3;
+    this.y = 300;
+    this.x = 400;
+  }
+    
+    if(this.right > (paddle1.x - paddle1.width) && this.right < (paddle1.x + paddle1.width) && (this.top < (paddle1.y + paddle1.height) && this.bottom > (paddle1.y - paddle1.height/2))) {
+      this.xSpeed = -this.xSpeed;
+      this.y > paddle1.y ? this.ySpeed += (paddle1.speed / 2) : this.ySpeed -= (paddle1.speed / 2);
+    }
+    
+    if(this.left < (paddle2.x + paddle2.width) && this.left < (paddle2.x + paddle2.width) && (this.top < (paddle2.y + paddle2.height) && this.bottom > (paddle2.y - paddle2.height/2))) {
+      this.xSpeed = -this.xSpeed;
+      this.y > paddle2.y ? this.ySpeed -= (paddle2.speed / 2) : this.ySpeed += (paddle2.speed / 2);
+    }
+};
 
 window.onload = function() {
   animate(step);
