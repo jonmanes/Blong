@@ -4,6 +4,8 @@ var player = new Player();
 var computer = new Computer();
 var ball = new Ball(397, 295);
 var keysDown = {};
+var score1 = 0;
+var score2 = 0;
 
 var render = function() {
   field_context.fillStyle="black";
@@ -89,15 +91,7 @@ Player.prototype.update = function() {
 };
 
 Computer.prototype.update = function() {
-    var speed = Math.min(ball.ySpeed,3);
-    
-    if (this.paddle.y > ball.y) {
-        this.paddle.move(0,-this.paddle.speed);
-    } else if (this.paddle.y < ball.y) {
-        this.paddle.move(0,this.paddle.speed);
-    } else {
-    this.paddle.move(0, speed);
-    }
+    this.paddle.y > ball.y ? this.paddle.move(0,-this.paddle.speed) : this.paddle.move(0,this.paddle.speed);
 };
 
 Player.prototype.render = function() {
@@ -131,6 +125,9 @@ Ball.prototype.update = function(paddle1, paddle2) {
   }
 
   if(this.x < 5 || this.x > 795) {
+    this.x < 5 ? score1 ++ : score2 ++;
+    document.getElementById("player1Score").innerHTML = score1;
+    document.getElementById("player2Score").innerHTML = score2;
     this.ySpeed = Math.floor((Math.random() * 8) + -4);
     this.xSpeed = 3;
     this.y = 300;
