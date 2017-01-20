@@ -34,11 +34,51 @@ var step = function() {
 };
 
 var update = function() {
+  gameState();
   player.update();
   computer.update();
   ball.update(player.paddle, computer.paddle);
 };
 
+function gameState () {
+    if (score1 === 1 || score2 === 1) {
+            if (score1 > score2) {
+                document.getElementById("playerWins").style.display="block";
+            } else {
+                document.getElementById("gameState").style.display="block";
+            }
+            ball.x = 400;
+            ball.y = 300;
+            ball.xSpeed = 0;
+            ball.ySpeed = 0;
+        }
+      for(var key in keysDown) {
+            var value = Number(key);
+                if(value == 27) {
+                    document.getElementById("gameState").style.display="none";
+                    document.getElementById("playerWins").style.display="none";
+                    score1 = 0;
+                    score2 = 0;
+                    document.getElementById("player1Score").innerHTML = score1;
+                    document.getElementById("player2Score").innerHTML = score2;
+                    ball.x = 400;
+                    ball.y = 300;
+                    ball.xSpeed = 0;
+                    ball.ySpeed = 0;
+                } else if(value == 13) {
+                    document.getElementById("gameState").style.display="none";
+                    document.getElementById("playerWins").style.display="none";
+                    score1 = 0;
+                    score2 = 0;
+                    document.getElementById("player1Score").innerHTML = score1;
+                    document.getElementById("player2Score").innerHTML = score2;
+                    ball.x = 400;
+                    ball.y = 300;
+                    ball.xSpeed = 3;
+                    ball.ySpeed = Math.floor((Math.random() * 8) + -4);
+                }
+      }    
+};
 function Paddle (x,y,width,height) {
   this.x = x;
   this.y = y;
@@ -58,8 +98,8 @@ function Player() {
 function Ball(x,y) {
   this.x = x;
   this.y = y;
-  this.xSpeed = 3;
-  this.ySpeed = Math.floor((Math.random() * 8) + -4);
+  this.xSpeed = 0;
+  this.ySpeed = 0;
 };
 
 Paddle.prototype.render = function() {
@@ -91,7 +131,8 @@ Player.prototype.update = function() {
 };
 
 Computer.prototype.update = function() {
-    this.paddle.y > ball.y ? this.paddle.move(0,-this.paddle.speed) : this.paddle.move(0,this.paddle.speed);
+    (this.paddle.y + this.paddle.height/2) > ball.y ? this.paddle.move(0, -this.paddle.speed) : this.paddle.move(0,0);
+    (this.paddle.y + this.paddle.height/2) < ball.y ? this.paddle.move(0, this.paddle.speed) : this.paddle.move(0,0);
 };
 
 Player.prototype.render = function() {
@@ -123,26 +164,27 @@ Ball.prototype.update = function(paddle1, paddle2) {
     this.y = 585;
     this.ySpeed = -this.ySpeed;
   }
-
-  if(this.x < 5 || this.x > 795) {
-    this.x < 5 ? score1 ++ : score2 ++;
-    document.getElementById("player1Score").innerHTML = score1;
-    document.getElementById("player2Score").innerHTML = score2;
-    this.ySpeed = Math.floor((Math.random() * 8) + -4);
-    this.xSpeed = 3;
-    this.y = 300;
-    this.x = 400;
-  }
     
     if(this.right > (paddle1.x - paddle1.width) && this.right < (paddle1.x + paddle1.width) && (this.top < (paddle1.y + paddle1.height) && this.bottom > (paddle1.y - paddle1.height/2))) {
       this.xSpeed = -this.xSpeed;
-      this.y > paddle1.y ? this.ySpeed += (paddle1.speed / 2) : this.ySpeed -= (paddle1.speed / 2);
+      this.y > (paddle1.y + paddle1.height/2) ? this.ySpeed += (paddle1.speed / 2) : this.ySpeed -= (paddle1.speed / 2);
     }
     
-    if(this.left < (paddle2.x + paddle2.width) && this.left < (paddle2.x + paddle2.width) && (this.top < (paddle2.y + paddle2.height) && this.bottom > (paddle2.y - paddle2.height/2))) {
+    if(this.left > (paddle2.x - paddle2.width) && this.left < (paddle2.x + paddle2.width) && (this.top < (paddle2.y + paddle2.height) && this.bottom > (paddle2.y - paddle2.height/2))) {
       this.xSpeed = -this.xSpeed;
-      this.y > paddle2.y ? this.ySpeed -= (paddle2.speed / 2) : this.ySpeed += (paddle2.speed / 2);
+      this.y > (paddle2.y + paddle2.height/2) ? this.ySpeed += (paddle2.speed / 2) : this.ySpeed -= (paddle2.speed / 2);
     }
+    
+    if(this.x < 5 || this.x > 795) {
+        this.x < 5 ? score1 ++ : score2 ++;
+        document.getElementById("player1Score").innerHTML = score1;
+        document.getElementById("player2Score").innerHTML = score2;
+        this.x = 400;
+        this.y = 300;
+        this.xSpeed = 3;
+        this.ySpeed = Math.floor((Math.random() * 8) + -4);
+    }
+    
 };
 
 window.onload = function() {

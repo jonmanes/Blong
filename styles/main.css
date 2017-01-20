@@ -1,15 +1,63 @@
-#player1Score {
+.hero-title {
     position: relative;
-    color: black;
-    font-size: 40;
-    left: 600px;
+    left: 100px;
+    top: 25px;
+}
+
+
+#player1Score {
+    position: absolute;
+    color: white;
+    font-size: 100px;
+    left: 450px;
+    top: 110px;
     font-weight: 800;
 }
 
 #player2Score {
     position: absolute;
-    color: black;
-    font-size: 40;
-    left: 200px;
+    color: white;
+    font-size: 100px;
+    left: 320px;
+    top: 110px;
     font-weight: 800;
+}
+
+#gameState {
+    position: absolute;
+    color: white;
+    font-size: 60px;
+    left: 275px;
+    top: 325px;
+    font-weight: 800;
+    background-color: black;
+    border-style: dotted;
+    border-color: white;    
+}
+#playerWins {
+    position: absolute;
+    color: white;
+    font-size: 60px;
+    left: 280px;
+    top: 325px;
+    font-weight: 800;
+    background-color: black;
+    border-style: dotted;
+    border-color: white;    
+}
+
+.hidden {
+    display: none;
+}
+
+#escape {
+    position: absolute;
+    left: 500px;
+    top: 25px;
+    
+}
+#enter {
+    position: absolute;
+    left: 500px;
+    top: 50px;
 }

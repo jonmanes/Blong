@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Blong</title>
+      <title>JS PONG</title>
       <link rel="stylesheet" type="text/css" href="styles/main.css">
     </head>
     <body>
       <section class="hero-content">
-          <h1 class="hero-title">Lets Play Blong!</h1>
+          <h1 class="hero-title">Lets Play Pong!</h1>
       </section>
         <div id="player2Score">0</div>
         <div id="player1Score">0</div>
+        <div class="hidden" id="gameState">You Lost!</div>
+        <div class="hidden" id="playerWins">You Won!</div>
       <section>
         <canvas id="field" width="800" height="600"></canvas>
       </section>
+        <h3 id="escape">Press ESC to stop game</h3>
+        
+        
+        <h3 id="enter">Press Enter to start a new game</h3>
       <script src="scripts/pong.js"></script>
     </body>
 </html>
