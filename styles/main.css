@@ -32,7 +32,7 @@
     font-weight: 800;
     background-color: black;
     border-style: dotted;
-    border-color: white;    
+    border-color: white;
 }
 #playerWins {
     position: absolute;
@@ -43,18 +43,23 @@
     font-weight: 800;
     background-color: black;
     border-style: dotted;
-    border-color: white;    
+    border-color: white;
 }
 
 .hidden {
     display: none;
 }
+#two {
+    position: absolute;
+    left: 220px;
+    top: 650px;
 
+}
 #escape {
     position: absolute;
     left: 500px;
     top: 25px;
-    
+
 }
 #enter {
     position: absolute;
